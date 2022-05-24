@@ -1,5 +1,6 @@
 package com.example.projectf2f3;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,12 @@ import java.util.ArrayList;
 public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDatos> {
 
     ArrayList<MenuVo> listaMenu;
+    private Context context;
 
     public AdapterDatos(ArrayList<MenuVo> listaUsuario) {
         this.listaMenu = listaUsuario;
+        this.context = context;
+
     }
 
     @Override
@@ -33,11 +37,10 @@ public class AdapterDatos extends RecyclerView.Adapter<AdapterDatos.ViewHolderDa
         holder.LaDescripcion.setText(listaMenu.get(position).getDescripcion());
         holder.ElPrecio.setText(listaMenu.get(position).getPrecio());
 
-        String urla =listaMenu.get(position).getFoto();
-        String urlb ="https://www.google.com/search?q=pizza&rlz=1C1GCEA_enES929ES929&sxsrf=ALiCzsZi4cnXgkt6LF8wP4-vLH6MIwo75g:1653363442879&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi43snlmvf3AhWDyoUKHU62CFkQ_AUoAnoECAMQBA&biw=1920&bih=937&dpr=1#imgrc=OHCj3BQ07nlg4M";
+        String urla = listaMenu.get(position).getFoto();
+        //String urlb = "https://cdn.pixabay.com/photo/2017/11/06/18/39/apple-2924531_960_720.jpg";
 
-        //Picasso.with(this).load(urla).placeholder(R.mipmap.ic_launcher).into(holder.mAnimeImageView);
-        //Picasso.with(this).load(urlb).into(holder.mAnimeImageView);
+        Picasso.get().load(urla).into(holder.mAnimeImageView);
 
     }
 
