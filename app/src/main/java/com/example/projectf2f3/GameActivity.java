@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,12 +21,33 @@ public class GameActivity extends AppCompatActivity {
     EditText campoId,campoNombre,campPuntuacion;
     Button btnconsulta, btnActua, btnDele,btnadd;
 
+    public boolean musicatorn = false ;
+
+
+    MediaPlayer player;
+    Animation play;
+    Button buttonPlay;
+
+
     ConexionSQLiteHelper conn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        // Variable MediaPlayer on guardem la musica
+        player = MediaPlayer.create(getApplicationContext(), R.raw.musicadefons);
+
+        // Variable bool que controla el torn de la musica
+        // Iniciem amb false
+        musicatorn = false;
+
+
+        buttonPlay = findViewById(R.id.playmusic);
+
+        play = AnimationUtils.loadAnimation(this,R.anim.play) ;
+
 
         conn=new ConexionSQLiteHelper(getApplicationContext(),"User_Database",null,1);
 
@@ -35,6 +59,31 @@ public class GameActivity extends AppCompatActivity {
         btnconsulta = (Button) findViewById(R.id.btnConsultar);
         btnActua = (Button) findViewById(R.id.btnActualizar);
         btnDele = (Button) findViewById(R.id.btnEliminar);
+
+
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Si esta false será true i si está true será false així activem o
+                // desactivem quan premem el botó
+
+                if(musicatorn == false){
+                    musicatorn = true;
+                    // Cridem a la funció que retorna la musica passant-li el torn (bool)
+                    MusicControl(musicatorn);
+
+                }else {
+                    musicatorn = false;
+                    MusicControl(musicatorn);
+                }
+
+
+
+
+
+            }
+        });
 
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +112,21 @@ public class GameActivity extends AppCompatActivity {
                 eliminarUsuario();
             }
         });
+
+    }
+
+    public void MusicControl(boolean musicatorn){
+        if(musicatorn){
+            player.start();
+            buttonPlay.startAnimation(play);
+
+
+
+        }else{
+            player.pause();
+            buttonPlay.clearAnimation();
+
+        }
 
     }
 
