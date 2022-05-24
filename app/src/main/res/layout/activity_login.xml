@@ -58,6 +58,8 @@
         android:layout_width="104dp"
         android:layout_height="53dp"
         android:text="Log In"
+        app:cornerRadius="20dp"
+        android:backgroundTint="@android:color/holo_orange_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
